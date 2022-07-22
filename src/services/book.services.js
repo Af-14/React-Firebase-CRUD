@@ -1,14 +1,14 @@
-import { db } from "../firebase-config";
-
 import {
-  collection,
-  getDocs,
-  getDoc,
   addDoc,
-  updateDoc,
+  collection,
   deleteDoc,
   doc,
+  getDoc,
+  getDocs,
+  updateDoc,
 } from "firebase/firestore";
+
+import { db } from "../firebase-config";
 
 const bookCollectionRef = collection(db, "books");
 class BookDataService {

@@ -1,5 +1,6 @@
+import { Button, Table } from "react-bootstrap";
 import React, { useEffect, useState } from "react";
-import { Table, Button } from "react-bootstrap";
+
 import BookDataService from "../services/book.services";
 
 const BooksList = ({ getBookId }) => {
@@ -33,6 +34,7 @@ const BooksList = ({ getBookId }) => {
             <th>#</th>
             <th>Book Title</th>
             <th>Book Author</th>
+            <th>Book Chapter</th>
             <th>Status</th>
             <th>Action</th>
           </tr>
@@ -44,6 +46,8 @@ const BooksList = ({ getBookId }) => {
                 <td>{index + 1}</td>
                 <td>{doc.title}</td>
                 <td>{doc.author}</td>
+                <td>{doc.chapter}</td>
+                <td>{doc.pagecount}</td>
                 <td>{doc.status}</td>
                 <td>
                   <Button

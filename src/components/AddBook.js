@@ -1,24 +1,29 @@
-import React, { useState, useEffect } from "react";
-import { Form, Alert, InputGroup, Button, ButtonGroup } from "react-bootstrap";
+import { Alert, Button, ButtonGroup, Form, InputGroup } from "react-bootstrap";
+import React, { useEffect, useState } from "react";
+
 import BookDataService from "../services/book.services";
 
 const AddBook = ({ id, setBookId }) => {
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
-  const [status, setStatus] = useState("Available");
+  const [chapter, setChapter] = useState("");
+  const [pagecount, setPageCount] = useState("");
+  const [status, setStatus] = useState("Completed");
   const [flag, setFlag] = useState(true);
   const [message, setMessage] = useState({ error: false, msg: "" });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setMessage("");
-    if (title === "" || author === "") {
+    if (title === "" || author === "" || chapter === "" || pagecount === "") {
       setMessage({ error: true, msg: "All fields are mandatory!" });
       return;
     }
     const newBook = {
       title,
       author,
+      chapter,
+      pagecount,
       status,
     };
     console.log(newBook);
@@ -47,6 +52,8 @@ const AddBook = ({ id, setBookId }) => {
       console.log("the record is :", docSnap.data());
       setTitle(docSnap.data().title);
       setAuthor(docSnap.data().author);
+      setChapter(docSnap.data().chapter);
+      setPageCount(docSnap.data().pagecount);
       setStatus(docSnap.data().status);
     } catch (err) {
       setMessage({ error: true, msg: err.message });
@@ -96,26 +103,51 @@ const AddBook = ({ id, setBookId }) => {
               />
             </InputGroup>
           </Form.Group>
+
+          <Form.Group className="mb-3" controlId="formBookChapter">
+            <InputGroup>
+              <InputGroup.Text id="formBookChapter">A</InputGroup.Text>
+              <Form.Control
+                type="text"
+                placeholder="Book Chapter"
+                value={chapter}
+                onChange={(e) => setChapter(e.target.value)}
+              />
+            </InputGroup>
+          </Form.Group>
+
+          <Form.Group className="mb-3" controlId="formBookPageCount">
+            <InputGroup>
+              <InputGroup.Text id="formBookPageCount">A</InputGroup.Text>
+              <Form.Control
+                type="text"
+                placeholder="Book Page Count"
+                value={pagecount}
+                onChange={(e) => setPageCount(e.target.value)}
+              />
+            </InputGroup>
+          </Form.Group>
+
           <ButtonGroup aria-label="Basic example" className="mb-3">
             <Button
               disabled={flag}
               variant="success"
               onClick={(e) => {
-                setStatus("Available");
+                setStatus("Completed");
                 setFlag(true);
               }}
             >
-              Available
+              Completed
             </Button>
             <Button
               variant="danger"
               disabled={!flag}
               onClick={(e) => {
-                setStatus("Not Available");
+                setStatus("Not Completed");
                 setFlag(false);
               }}
             >
-              Not Available
+              Not Completed
             </Button>
           </ButtonGroup>
           <div className="d-grid gap-2">
